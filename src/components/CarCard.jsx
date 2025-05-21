@@ -1,16 +1,11 @@
 
 import React from 'react';
-import { Car as CarType } from '../data/cars';
 import { Car as CarIcon, Fuel, Gauge, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-interface CarCardProps {
-  car: CarType;
-}
-
-const CarCard = ({ car }: CarCardProps) => {
+const CarCard = ({ car }) => {
   const formatPrice = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',

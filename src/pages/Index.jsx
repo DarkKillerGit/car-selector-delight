@@ -4,22 +4,14 @@ import Header from '../components/Header';
 import Hero from '../components/Hero';
 import FilterPanel from '../components/FilterPanel';
 import CarGrid from '../components/CarGrid';
-import { cars, Car } from '../data/cars';
+import { cars } from '../data/cars';
 import { toast } from "sonner";
 
-interface Filters {
-  brands: string[];
-  transmissions: string[];
-  fuelTypes: string[];
-  priceRange: [number, number];
-  yearRange: [number, number];
-}
-
 const Index = () => {
-  const [filteredCars, setFilteredCars] = useState<Car[]>(cars);
+  const [filteredCars, setFilteredCars] = useState(cars);
   const [isLoading, setIsLoading] = useState(false);
   
-  const handleFilterChange = (filters: Filters) => {
+  const handleFilterChange = (filters) => {
     setIsLoading(true);
     
     // Simulate API delay

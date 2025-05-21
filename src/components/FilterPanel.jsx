@@ -6,21 +6,9 @@ import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
 import { carBrands, transmissionTypes, fuelTypes } from '../data/cars';
 
-interface FilterPanelProps {
-  onFilterChange: (filters: FilterState) => void;
-}
-
-interface FilterState {
-  brands: string[];
-  transmissions: string[];
-  fuelTypes: string[];
-  priceRange: [number, number];
-  yearRange: [number, number];
-}
-
-const FilterPanel = ({ onFilterChange }: FilterPanelProps) => {
+const FilterPanel = ({ onFilterChange }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [filters, setFilters] = useState<FilterState>({
+  const [filters, setFilters] = useState({
     brands: [],
     transmissions: [],
     fuelTypes: [],
@@ -28,7 +16,7 @@ const FilterPanel = ({ onFilterChange }: FilterPanelProps) => {
     yearRange: [2010, 2023],
   });
 
-  const handleBrandChange = (brand: string, checked: boolean) => {
+  const handleBrandChange = (brand, checked) => {
     const newBrands = checked 
       ? [...filters.brands, brand]
       : filters.brands.filter(b => b !== brand);
@@ -38,7 +26,7 @@ const FilterPanel = ({ onFilterChange }: FilterPanelProps) => {
     onFilterChange(newFilters);
   };
 
-  const handleTransmissionChange = (type: string, checked: boolean) => {
+  const handleTransmissionChange = (type, checked) => {
     const newTransmissions = checked 
       ? [...filters.transmissions, type]
       : filters.transmissions.filter(t => t !== type);
@@ -48,7 +36,7 @@ const FilterPanel = ({ onFilterChange }: FilterPanelProps) => {
     onFilterChange(newFilters);
   };
 
-  const handleFuelTypeChange = (type: string, checked: boolean) => {
+  const handleFuelTypeChange = (type, checked) => {
     const newFuelTypes = checked 
       ? [...filters.fuelTypes, type]
       : filters.fuelTypes.filter(f => f !== type);
@@ -58,14 +46,14 @@ const FilterPanel = ({ onFilterChange }: FilterPanelProps) => {
     onFilterChange(newFilters);
   };
 
-  const handlePriceRangeChange = (values: number[]) => {
-    const newFilters = { ...filters, priceRange: [values[0], values[1]] as [number, number] };
+  const handlePriceRangeChange = (values) => {
+    const newFilters = { ...filters, priceRange: [values[0], values[1]] };
     setFilters(newFilters);
     onFilterChange(newFilters);
   };
 
-  const handleYearRangeChange = (values: number[]) => {
-    const newFilters = { ...filters, yearRange: [values[0], values[1]] as [number, number] };
+  const handleYearRangeChange = (values) => {
+    const newFilters = { ...filters, yearRange: [values[0], values[1]] };
     setFilters(newFilters);
     onFilterChange(newFilters);
   };

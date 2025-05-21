@@ -8,7 +8,7 @@ const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedBrand, setSelectedBrand] = useState('');
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = (e) => {
     e.preventDefault();
     console.log({ searchTerm, selectedBrand });
     // Here you would typically trigger the search with the provided terms

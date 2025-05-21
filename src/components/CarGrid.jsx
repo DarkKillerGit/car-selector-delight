@@ -1,14 +1,8 @@
 
 import React from 'react';
-import { Car } from '../data/cars';
 import CarCard from './CarCard';
 
-interface CarGridProps {
-  cars: Car[];
-  isLoading?: boolean;
-}
-
-const CarGrid = ({ cars, isLoading = false }: CarGridProps) => {
+const CarGrid = ({ cars, isLoading = false }) => {
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

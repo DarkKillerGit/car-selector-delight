@@ -1,18 +1,4 @@
 
-export interface Car {
-  id: string;
-  brand: string;
-  model: string;
-  year: number;
-  price: number;
-  mileage: number;
-  fuelType: string;
-  transmission: string;
-  color: string;
-  image: string;
-  description: string;
-}
-
 export const carBrands = [
   "Audi", "BMW", "Ford", "Honda", "Hyundai", "Lexus", "Mazda", 
   "Mercedes", "Nissan", "Tesla", "Toyota", "Volkswagen", "Volvo"
@@ -22,7 +8,7 @@ export const transmissionTypes = ["Automatic", "Manual", "Semi-automatic"];
 
 export const fuelTypes = ["Petrol", "Diesel", "Hybrid", "Electric"];
 
-export const cars: Car[] = [
+export const cars = [
   {
     id: "1",
     brand: "Audi",
