@@ -14,31 +14,66 @@ const Index = () => {
   const handleFilterChange = (filters) => {
     setIsLoading(true);
     
-    // Simulate API delay
+    // Симуляция задержки API
     setTimeout(() => {
       const filtered = cars.filter(car => {
-        // Filter by brand if any selected
+        // Фильтр по происхождению автомобиля
+        if (filters.carOrigins.length > 0 && !filters.carOrigins.includes(car.origin)) {
+          return false;
+        }
+        
+        // Фильтр по марке, только если выбраны
         if (filters.brands.length > 0 && !filters.brands.includes(car.brand)) {
           return false;
         }
         
-        // Filter by transmission if any selected
-        if (filters.transmissions.length > 0 && !filters.transmissions.includes(car.transmission)) {
+        // Фильтр по типу кузова
+        if (filters.bodyTypes.length > 0 && !filters.bodyTypes.includes(car.body?.type)) {
           return false;
         }
         
-        // Filter by fuel type if any selected
+        // Фильтр по материалу кузова
+        if (filters.bodyMaterials.length > 0 && !filters.bodyMaterials.includes(car.body?.material)) {
+          return false;
+        }
+        
+        // Фильтр по типу подвески
+        if (filters.suspensionTypes.length > 0 && !filters.suspensionTypes.includes(car.suspension)) {
+          return false;
+        }
+        
+        // Фильтр по статусу пробега (Новая, Б/У)
+        if (filters.mileageStatus.length > 0 && !filters.mileageStatus.includes(car.mileageStatus)) {
+          return false;
+        }
+        
+        // Фильтр по типу тормозов
+        if (filters.brakeTypes.length > 0 && !filters.brakeTypes.includes(car.brakes)) {
+          return false;
+        }
+        
+        // Фильтр по типу коробки передач
+        if (filters.transmissionTypes.length > 0 && !filters.transmissionTypes.includes(car.transmission)) {
+          return false;
+        }
+        
+        // Фильтр по типу привода
+        if (filters.driveTypes.length > 0 && !filters.driveTypes.includes(car.driveType)) {
+          return false;
+        }
+        
+        // Фильтр по типу двигателя
         if (filters.fuelTypes.length > 0 && !filters.fuelTypes.includes(car.fuelType)) {
           return false;
         }
         
-        // Filter by price range
-        if (car.price < filters.priceRange[0] || car.price > filters.priceRange[1]) {
+        // Фильтр по ценовому диапазону
+        if (car.price < filters.priceRange.min || (filters.priceRange.max !== Infinity && car.price > filters.priceRange.max)) {
           return false;
         }
         
-        // Filter by year range
-        if (car.year < filters.yearRange[0] || car.year > filters.yearRange[1]) {
+        // Фильтр по диапазону года выпуска
+        if (car.year < filters.yearRange.min || (filters.yearRange.max !== Infinity && car.year > filters.yearRange.max)) {
           return false;
         }
         
@@ -48,7 +83,7 @@ const Index = () => {
       setFilteredCars(filtered);
       setIsLoading(false);
       
-      toast.info(`Found ${filtered.length} cars matching your criteria`);
+      toast.info(`Найдено ${filtered.length} автомобилей соответствующих вашим критериям`);
     }, 500);
   };
   
@@ -63,8 +98,8 @@ const Index = () => {
           
           <div>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold">Available Cars</h2>
-              <p className="text-gray-600">{filteredCars.length} results</p>
+              <h2 className="text-2xl font-bold">Доступные автомобили</h2>
+              <p className="text-gray-600">{filteredCars.length} результатов</p>
             </div>
             
             <CarGrid cars={filteredCars} isLoading={isLoading} />
@@ -74,7 +109,7 @@ const Index = () => {
       
       <footer className="bg-gray-100 py-8 mt-12">
         <div className="container mx-auto px-4 text-center text-gray-600">
-          <p>© {new Date().getFullYear()} CarFinder. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Поиск автомобилей. Все права защищены.</p>
         </div>
       </footer>
     </div>
