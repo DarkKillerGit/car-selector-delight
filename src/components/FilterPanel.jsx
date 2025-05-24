@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Filter, ChevronDown, ChevronUp } from 'lucide-react';
+import { Filter, ChevronDown, ChevronUp, Minimize2, Maximize2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
@@ -24,6 +24,7 @@ import {
 
 const FilterPanel = ({ onFilterChange }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [areAllFiltersCollapsed, setAreAllFiltersCollapsed] = useState(false);
   const [filters, setFilters] = useState({
     carOrigins: [],
     brands: [],
@@ -66,6 +67,10 @@ const FilterPanel = ({ onFilterChange }) => {
     setIsExpanded(!isExpanded);
   };
 
+  const toggleAllFilters = () => {
+    setAreAllFiltersCollapsed(!areAllFiltersCollapsed);
+  };
+
   const applyFilters = () => {
     // Преобразуем минимальное и максимальное значение в числа для диапазонов
     const processedFilters = {
@@ -75,7 +80,7 @@ const FilterPanel = ({ onFilterChange }) => {
         max: filters.priceRange.max === "" ? Infinity : parseInt(filters.priceRange.max)
       },
       yearRange: {
-        min: filters.yearRange.min === "" ? 0 : parseInt(filters.yearRange.min),
+        min: filters.yearRange.min === "" ? 2000 : parseInt(filters.yearRange.min),
         max: filters.yearRange.max === "" ? Infinity : parseInt(filters.yearRange.max)
       }
     };
@@ -127,6 +132,13 @@ const FilterPanel = ({ onFilterChange }) => {
   const CollapsibleFilterGroup = ({ title, children }) => {
     const [isOpen, setIsOpen] = useState(false);
     
+    // Устанавливаем состояние в зависимости от глобального состояния сворачивания
+    React.useEffect(() => {
+      if (areAllFiltersCollapsed) {
+        setIsOpen(false);
+      }
+    }, [areAllFiltersCollapsed]);
+    
     return (
       <Collapsible open={isOpen} onOpenChange={setIsOpen} className="mb-4">
         <div className="flex items-center justify-between">
@@ -151,9 +163,26 @@ const FilterPanel = ({ onFilterChange }) => {
           <Filter className="h-5 w-5 mr-2 text-primary" />
           Фильтры
         </h2>
-        <Button variant="outline" onClick={toggleExpand}>
-          {isExpanded ? 'Скрыть фильтры' : 'Показать фильтры'}
-        </Button>
+        <div className="flex gap-2">
+          {isExpanded && (
+            <Button variant="ghost" size="sm" onClick={toggleAllFilters}>
+              {areAllFiltersCollapsed ? (
+                <>
+                  <Maximize2 className="h-4 w-4 mr-1" />
+                  Развернуть все
+                </>
+              ) : (
+                <>
+                  <Minimize2 className="h-4 w-4 mr-1" />
+                  Свернуть все
+                </>
+              )}
+            </Button>
+          )}
+          <Button variant="outline" onClick={toggleExpand}>
+            {isExpanded ? 'Скрыть фильтры' : 'Показать фильтры'}
+          </Button>
+        </div>
       </div>
 
       {isExpanded && (
@@ -391,7 +420,7 @@ const FilterPanel = ({ onFilterChange }) => {
                   value={filters.yearRange.min}
                   onChange={(e) => handleRangeChange('yearRange', 'min', e.target.value)}
                   placeholder="С"
-                  min="1900"
+                  min="2000"
                   max="2023"
                 />
               </div>
@@ -403,7 +432,7 @@ const FilterPanel = ({ onFilterChange }) => {
                   value={filters.yearRange.max}
                   onChange={(e) => handleRangeChange('yearRange', 'max', e.target.value)}
                   placeholder="По"
-                  min="1900"
+                  min="2000"
                   max="2023"
                 />
               </div>
