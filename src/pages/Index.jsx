@@ -4,25 +4,53 @@ import Header from '../components/Header';
 import Hero from '../components/Hero';
 import FilterPanel from '../components/FilterPanel';
 import CarGrid from '../components/CarGrid';
+import CompareButton from '../components/CompareButton';
 import { cars } from '../data/cars';
+import { searchCars } from '../utils/searchUtils';
 import { toast } from "sonner";
 
 const Index = () => {
   const [filteredCars, setFilteredCars] = useState(cars);
   const [isLoading, setIsLoading] = useState(false);
-  
-  const handleFilterChange = (filters) => {
+  const [currentSearchParams, setCurrentSearchParams] = useState({
+    searchTerm: '',
+    selectedBrand: ''
+  });
+  const [currentFilters, setCurrentFilters] = useState({
+    carOrigins: [],
+    brands: [],
+    bodyTypes: [],
+    bodyMaterials: [],
+    suspensionTypes: [],
+    mileageStatus: [],
+    brakeTypes: [],
+    transmissionTypes: [],
+    driveTypes: [],
+    fuelTypes: [],
+    priceRange: { min: 0, max: Infinity },
+    yearRange: { min: 1990, max: Infinity }
+  });
+
+  // Функция для применения поиска и фильтров
+  const applySearchAndFilters = (searchParams = currentSearchParams, filters = currentFilters) => {
     setIsLoading(true);
     
-    // Симуляция задержки API
     setTimeout(() => {
-      const filtered = cars.filter(car => {
+      let result = cars;
+      
+      // Сначала применяем поиск
+      if (searchParams.searchTerm || searchParams.selectedBrand) {
+        result = searchCars(result, searchParams);
+      }
+      
+      // Затем применяем фильтры
+      result = result.filter(car => {
         // Фильтр по происхождению автомобиля
         if (filters.carOrigins.length > 0 && !filters.carOrigins.includes(car.origin)) {
           return false;
         }
         
-        // Фильтр по марке, только если выбраны
+        // Фильтр по марке, только если выбраны и не конфликтует с поиском
         if (filters.brands.length > 0 && !filters.brands.includes(car.brand)) {
           return false;
         }
@@ -80,17 +108,38 @@ const Index = () => {
         return true;
       });
       
-      setFilteredCars(filtered);
+      setFilteredCars(result);
       setIsLoading(false);
       
-      toast.info(`Найдено ${filtered.length} автомобилей соответствующих вашим критериям`);
+      // Показываем уведомление о результатах
+      const searchMessage = searchParams.searchTerm ? `по запросу "${searchParams.searchTerm}"` : '';
+      const brandMessage = searchParams.selectedBrand ? `марки ${searchParams.selectedBrand}` : '';
+      const combinedMessage = [searchMessage, brandMessage].filter(Boolean).join(' ');
+      
+      if (combinedMessage) {
+        toast.info(`Найдено ${result.length} автомобилей ${combinedMessage}`);
+      } else {
+        toast.info(`Найдено ${result.length} автомобилей соответствующих вашим критериям`);
+      }
     }, 500);
+  };
+
+  const handleSearch = (searchParams) => {
+    console.log('Search params received:', searchParams);
+    setCurrentSearchParams(searchParams);
+    applySearchAndFilters(searchParams, currentFilters);
+  };
+  
+  const handleFilterChange = (filters) => {
+    console.log('Filters received:', filters);
+    setCurrentFilters(filters);
+    applySearchAndFilters(currentSearchParams, filters);
   };
   
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <Hero />
+      <Hero onSearch={handleSearch} />
       
       <main className="flex-grow container mx-auto px-4 py-8">
         <div className="flex flex-col space-y-8">
@@ -99,7 +148,19 @@ const Index = () => {
           <div>
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold">Доступные автомобили</h2>
-              <p className="text-gray-600">{filteredCars.length} результатов</p>
+              <div className="text-gray-600">
+                {(currentSearchParams.searchTerm || currentSearchParams.selectedBrand) && (
+                  <div className="text-sm mb-1">
+                    {currentSearchParams.searchTerm && (
+                      <span>Поиск: "{currentSearchParams.searchTerm}" </span>
+                    )}
+                    {currentSearchParams.selectedBrand && (
+                      <span>Марка: {currentSearchParams.selectedBrand}</span>
+                    )}
+                  </div>
+                )}
+                <p>{filteredCars.length} результатов</p>
+              </div>
             </div>
             
             <CarGrid cars={filteredCars} isLoading={isLoading} />
@@ -112,6 +173,8 @@ const Index = () => {
           <p>© {new Date().getFullYear()} Поиск автомобилей. Все права защищены.</p>
         </div>
       </footer>
+      
+      <CompareButton />
     </div>
   );
 };

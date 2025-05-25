@@ -4,14 +4,32 @@ import { Search } from 'lucide-react';
 import { carBrands } from '../data/cars';
 import { Button } from '@/components/ui/button';
 
-const SearchBar = () => {
+const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedBrand, setSelectedBrand] = useState('');
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log({ searchTerm, selectedBrand });
-    // Here you would typically trigger the search with the provided terms
+    console.log('Search initiated:', { searchTerm, selectedBrand });
+    
+    // Вызываем функцию поиска из родительского компонента
+    if (onSearch) {
+      onSearch({
+        searchTerm: searchTerm.trim(),
+        selectedBrand
+      });
+    }
+  };
+
+  const handleClear = () => {
+    setSearchTerm('');
+    setSelectedBrand('');
+    if (onSearch) {
+      onSearch({
+        searchTerm: '',
+        selectedBrand: ''
+      });
+    }
   };
 
   return (
@@ -20,7 +38,7 @@ const SearchBar = () => {
         <Search className="h-5 w-5 text-gray-400 mr-2" />
         <input
           type="text"
-          placeholder="Search by model, year, features..."
+          placeholder="Поиск по марке, модели..."
           className="w-full outline-none"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -33,8 +51,8 @@ const SearchBar = () => {
           value={selectedBrand}
           onChange={(e) => setSelectedBrand(e.target.value)}
         >
-          <option value="">All Brands</option>
-          {carBrands.map((brand) => (
+          <option value="">Все марки</option>
+          {Object.values(carBrands).flat().map((brand) => (
             <option key={brand} value={brand}>
               {brand}
             </option>
@@ -42,9 +60,16 @@ const SearchBar = () => {
         </select>
       </div>
       
-      <Button type="submit" className="m-1">
-        Search Cars
-      </Button>
+      <div className="flex gap-2 m-1">
+        {(searchTerm || selectedBrand) && (
+          <Button type="button" variant="outline" onClick={handleClear}>
+            Очистить
+          </Button>
+        )}
+        <Button type="submit">
+          Поиск
+        </Button>
+      </div>
     </form>
   );
 };

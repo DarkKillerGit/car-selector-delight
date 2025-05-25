@@ -2,7 +2,7 @@
 import React from 'react';
 import SearchBar from './SearchBar';
 
-const Hero = () => {
+const Hero = ({ onSearch }) => {
   return (
     <div className="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-20"></div>
@@ -11,13 +11,13 @@ const Hero = () => {
       <div className="relative container mx-auto px-4 py-16 md:py-24 lg:py-32">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
-            Find Your Perfect Car
+            Найдите свой идеальный автомобиль
           </h1>
           <p className="text-lg md:text-xl mb-8 opacity-90">
-            Browse through our extensive collection of vehicles to find the one that matches your needs and style.
+            Просматривайте нашу обширную коллекцию автомобилей, чтобы найти тот, который соответствует вашим потребностям и стилю.
           </p>
           
-          <SearchBar />
+          <SearchBar onSearch={onSearch} />
         </div>
       </div>
     </div>
