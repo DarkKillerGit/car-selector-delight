@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
@@ -137,7 +136,7 @@ const Index = () => {
   };
   
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background">
       <Header />
       <Hero onSearch={handleSearch} />
       
@@ -147,8 +146,8 @@ const Index = () => {
           
           <div>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold">Доступные автомобили</h2>
-              <div className="text-gray-600">
+              <h2 className="text-2xl font-bold text-foreground">Доступные автомобили</h2>
+              <div className="text-muted-foreground">
                 {(currentSearchParams.searchTerm || currentSearchParams.selectedBrand) && (
                   <div className="text-sm mb-1">
                     {currentSearchParams.searchTerm && (
@@ -168,8 +167,8 @@ const Index = () => {
         </div>
       </main>
       
-      <footer className="bg-gray-100 py-8 mt-12">
-        <div className="container mx-auto px-4 text-center text-gray-600">
+      <footer className="bg-gray-100 dark:bg-gray-800 py-8 mt-12">
+        <div className="container mx-auto px-4 text-center text-gray-600 dark:text-gray-300">
           <p>© {new Date().getFullYear()} Поиск автомобилей. Все права защищены.</p>
         </div>
       </footer>

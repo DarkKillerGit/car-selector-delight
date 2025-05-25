@@ -23,10 +23,10 @@ const CompareButton = () => {
 
   return (
     <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
-      <div className="bg-white shadow-lg rounded-lg border p-4 flex items-center gap-4">
+      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-200 dark:border-gray-700 p-4 flex items-center gap-4">
         <div className="flex items-center gap-2">
           <Scale className="h-5 w-5 text-primary" />
-          <span className="font-medium">
+          <span className="font-medium text-foreground">
             Выбрано для сравнения: {compareList.length}
           </span>
         </div>

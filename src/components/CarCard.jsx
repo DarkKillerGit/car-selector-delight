@@ -33,7 +33,7 @@ const CarCard = ({ car }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg card-hover-effect">
+    <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg card-hover-effect">
       <div className="relative h-48">
         <img 
           src={car.image} 
@@ -46,7 +46,7 @@ const CarCard = ({ car }) => {
         
         <div className="absolute top-2 left-2 flex gap-2">
           {isFavoritesPage && (
-            <div className="bg-white/90 rounded p-1">
+            <div className="bg-white/90 dark:bg-gray-800/90 rounded p-1">
               <Checkbox
                 checked={isInCompare(car.id)}
                 onCheckedChange={handleCompareChange}
@@ -57,8 +57,8 @@ const CarCard = ({ car }) => {
           {isAuthenticated && (
             <button
               onClick={handleFavoriteClick}
-              className={`p-2 rounded-full bg-white/80 hover:bg-white transition-colors ${
-                isFavorite(car.id) ? 'text-red-500' : 'text-gray-600'
+              className={`p-2 rounded-full bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-800 transition-colors ${
+                isFavorite(car.id) ? 'text-red-500' : 'text-gray-600 dark:text-gray-300'
               }`}
             >
               <Heart 
@@ -72,11 +72,11 @@ const CarCard = ({ car }) => {
       
       <div className="p-4">
         <div className="flex justify-between items-center mb-2">
-          <h3 className="text-xl font-bold">{car.brand} {car.model}</h3>
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white">{car.brand} {car.model}</h3>
           <span className="text-primary font-bold">${car.price.toLocaleString()}</span>
         </div>
         
-        <div className="flex flex-wrap gap-2 mb-4 text-sm text-gray-600">
+        <div className="flex flex-wrap gap-2 mb-4 text-sm text-gray-600 dark:text-gray-300">
           <div className="flex items-center gap-1">
             <Fuel size={16} />
             <span>{car.fuelType}</span>
@@ -103,19 +103,19 @@ const CarCard = ({ car }) => {
           </div>
         </div>
         
-        <p className="text-sm text-gray-600 mb-4 line-clamp-2">{car.description}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">{car.description}</p>
         
         <div className="flex flex-wrap gap-2 mt-2">
-          <span className="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-full">
+          <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded-full">
             {car.origin}
           </span>
-          <span className="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-full">
+          <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded-full">
             {car.body.material}
           </span>
-          <span className="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-full">
+          <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded-full">
             {car.suspension}
           </span>
-          <span className="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-full">
+          <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded-full">
             {car.brakes}
           </span>
         </div>

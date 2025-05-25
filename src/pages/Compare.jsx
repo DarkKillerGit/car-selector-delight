@@ -20,13 +20,13 @@ const Compare = () => {
 
   if (compareList.length === 0) {
     return (
-      <div>
+      <div className="min-h-screen bg-background">
         <Header />
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
-            <Scale className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-            <h1 className="text-2xl font-bold mb-4">Нет автомобилей для сравнения</h1>
-            <p className="text-gray-600 mb-6">Выберите автомобили из избранного для сравнения</p>
+            <Scale className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+            <h1 className="text-2xl font-bold mb-4 text-foreground">Нет автомобилей для сравнения</h1>
+            <p className="text-muted-foreground mb-6">Выберите автомобили из избранного для сравнения</p>
             <Button onClick={() => navigate('/favorites')}>
               Перейти в избранное
             </Button>
@@ -63,7 +63,7 @@ const Compare = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-background">
       <Header />
       <div className="container mx-auto px-4 py-8">
         <div className="mb-6 flex items-center justify-between">
@@ -74,7 +74,7 @@ const Compare = () => {
             </Button>
             <div className="flex items-center gap-2">
               <Scale className="h-6 w-6 text-primary" />
-              <h1 className="text-2xl font-bold">Сравнение автомобилей</h1>
+              <h1 className="text-2xl font-bold text-foreground">Сравнение автомобилей</h1>
             </div>
           </div>
           <Button variant="outline" onClick={clearCompare}>
@@ -85,7 +85,7 @@ const Compare = () => {
         {/* Изображения автомобилей */}
         <div className="mb-8">
           <div className="grid gap-4" style={{ gridTemplateColumns: `200px repeat(${compareList.length}, 1fr)` }}>
-            <div className="font-semibold text-lg flex items-center">
+            <div className="font-semibold text-lg flex items-center text-foreground">
               Фото
             </div>
             {compareList.map((car) => (
@@ -101,7 +101,7 @@ const Compare = () => {
                   alt={`${car.brand} ${car.model}`}
                   className="w-full h-32 object-cover rounded-lg"
                 />
-                <h3 className="mt-2 font-semibold text-center">
+                <h3 className="mt-2 font-semibold text-center text-foreground">
                   {car.brand} {car.model}
                 </h3>
               </div>
@@ -110,13 +110,13 @@ const Compare = () => {
         </div>
 
         {/* Таблица сравнения */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-48 font-semibold">Характеристика</TableHead>
+                <TableHead className="w-48 font-semibold bg-gray-50 dark:bg-gray-700 text-foreground">Характеристика</TableHead>
                 {compareList.map((car) => (
-                  <TableHead key={car.id} className="text-center font-semibold">
+                  <TableHead key={car.id} className="text-center font-semibold bg-gray-50 dark:bg-gray-700 text-foreground">
                     {car.brand} {car.model}
                   </TableHead>
                 ))}
@@ -124,15 +124,15 @@ const Compare = () => {
             </TableHeader>
             <TableBody>
               {specifications.map((spec) => (
-                <TableRow key={spec.key}>
-                  <TableCell className="font-medium bg-gray-50">
+                <TableRow key={spec.key} className="border-b border-gray-200 dark:border-gray-700">
+                  <TableCell className="font-medium bg-gray-50 dark:bg-gray-700 text-foreground">
                     {spec.label}
                   </TableCell>
                   {compareList.map((car) => {
                     const value = getValue(car, spec.key);
                     const formattedValue = spec.format ? spec.format(value) : value;
                     return (
-                      <TableCell key={car.id} className="text-center">
+                      <TableCell key={car.id} className="text-center text-foreground">
                         {formattedValue}
                       </TableCell>
                     );

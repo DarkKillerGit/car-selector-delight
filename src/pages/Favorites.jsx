@@ -16,12 +16,12 @@ const Favorites = () => {
 
   if (!isAuthenticated) {
     return (
-      <div>
+      <div className="min-h-screen bg-background">
         <Header />
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
-            <h1 className="text-2xl font-bold mb-4">Необходима авторизация</h1>
-            <p className="text-gray-600 mb-6">Войдите в систему, чтобы просматривать избранное</p>
+            <h1 className="text-2xl font-bold mb-4 text-foreground">Необходима авторизация</h1>
+            <p className="text-muted-foreground mb-6">Войдите в систему, чтобы просматривать избранное</p>
             <Button onClick={() => navigate('/')}>
               <ArrowLeft className="h-4 w-4 mr-2" />
               На главную
@@ -33,7 +33,7 @@ const Favorites = () => {
   }
 
   return (
-    <div>
+    <div className="min-h-screen bg-background">
       <Header />
       <div className="container mx-auto px-4 py-8">
         <div className="mb-6 flex items-center justify-between">
@@ -44,17 +44,17 @@ const Favorites = () => {
             </Button>
             <div className="flex items-center gap-2">
               <Heart className="h-6 w-6 text-red-500" />
-              <h1 className="text-2xl font-bold">Избранное</h1>
+              <h1 className="text-2xl font-bold text-foreground">Избранное</h1>
             </div>
           </div>
-          <span className="text-gray-600">
+          <span className="text-muted-foreground">
             {favorites.length} {favorites.length === 1 ? 'автомобиль' : 'автомобилей'}
           </span>
         </div>
 
         {favorites.length > 0 && (
-          <div className="mb-4 p-4 bg-blue-50 rounded-lg">
-            <p className="text-sm text-blue-700">
+          <div className="mb-4 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+            <p className="text-sm text-blue-700 dark:text-blue-300">
               <strong>Совет:</strong> Выберите 2 или более автомобилей с помощью чекбоксов для сравнения их характеристик
             </p>
           </div>
@@ -62,9 +62,9 @@ const Favorites = () => {
 
         {favorites.length === 0 ? (
           <div className="text-center py-12">
-            <Heart className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold mb-2">Пока нет избранных автомобилей</h2>
-            <p className="text-gray-600 mb-6">Добавьте автомобили в избранное, чтобы легко находить их позже</p>
+            <Heart className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+            <h2 className="text-xl font-semibold mb-2 text-foreground">Пока нет избранных автомобилей</h2>
+            <p className="text-muted-foreground mb-6">Добавьте автомобили в избранное, чтобы легко находить их позже</p>
             <Button onClick={() => navigate('/')}>
               Посмотреть автомобили
             </Button>
