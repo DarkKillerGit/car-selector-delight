@@ -39,7 +39,7 @@ const SearchBar = ({ onSearch }) => {
         <input
           type="text"
           placeholder="Поиск по марке, модели..."
-          className="w-full outline-none"
+          className="w-full outline-none text-gray-900 placeholder-gray-500"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -47,7 +47,7 @@ const SearchBar = ({ onSearch }) => {
       
       <div className="md:border-l border-gray-200 px-4 py-2">
         <select
-          className="w-full outline-none appearance-none text-gray-700"
+          className="w-full outline-none appearance-none text-gray-700 bg-white"
           value={selectedBrand}
           onChange={(e) => setSelectedBrand(e.target.value)}
         >
@@ -62,11 +62,11 @@ const SearchBar = ({ onSearch }) => {
       
       <div className="flex gap-2 m-1">
         {(searchTerm || selectedBrand) && (
-          <Button type="button" variant="outline" onClick={handleClear}>
+          <Button type="button" variant="secondary" onClick={handleClear} className="bg-gray-100 hover:bg-gray-200 text-gray-700">
             Очистить
           </Button>
         )}
-        <Button type="submit">
+        <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">
           Поиск
         </Button>
       </div>
