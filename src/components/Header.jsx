@@ -6,6 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import AuthDialog from './auth/AuthDialog';
 import UserMenu from './auth/UserMenu';
+import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
@@ -13,7 +14,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-30 w-full bg-white border-b shadow-sm">
+      <header className="sticky top-0 z-30 w-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <Car className="h-6 w-6 text-primary" />
@@ -36,6 +37,7 @@ const Header = () => {
           </nav>
           
           <div className="flex items-center space-x-4">
+            <ThemeToggle />
             {user ? (
               <UserMenu />
             ) : (
