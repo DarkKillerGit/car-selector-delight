@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound";
 import CarDetails from "./pages/CarDetails";
 import Favorites from "./pages/Favorites";
 import Compare from "./pages/Compare";
+import Architecture from "./pages/Architecture";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
                   <Route path="/car/:id" element={<CarDetails />} />
                   <Route path="/favorites" element={<Favorites />} />
                   <Route path="/compare" element={<Compare />} />
+                  <Route path="/architecture" element={<Architecture />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </CompareProvider>

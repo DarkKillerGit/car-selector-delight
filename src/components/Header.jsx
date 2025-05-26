@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Car, User } from 'lucide-react';
+import { Car, User, Sitemap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { Link } from 'react-router-dom';
@@ -24,6 +24,10 @@ const Header = () => {
           <nav className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">
               Home
+            </Link>
+            <Link to="/architecture" className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1">
+              <Sitemap className="h-4 w-4" />
+              Архитектура
             </Link>
             <a href="#" className="text-sm font-medium hover:text-primary transition-colors">
               Browse Cars
