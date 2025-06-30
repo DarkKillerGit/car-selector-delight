@@ -1,15 +1,17 @@
+
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import FilterPanel from '../components/FilterPanel';
 import CarGrid from '../components/CarGrid';
 import CompareButton from '../components/CompareButton';
-import { cars } from '../data/cars';
+import { useCars } from '../hooks/useCars';
 import { searchCars } from '../utils/searchUtils';
 import { toast } from "sonner";
 
 const Index = () => {
-  const [filteredCars, setFilteredCars] = useState(cars);
+  const { data: cars = [], isLoading: carsLoading, error } = useCars();
+  const [filteredCars, setFilteredCars] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentSearchParams, setCurrentSearchParams] = useState({
     searchTerm: '',
@@ -29,6 +31,20 @@ const Index = () => {
     priceRange: { min: 0, max: Infinity },
     yearRange: { min: 1990, max: Infinity }
   });
+
+  // Update filtered cars when cars data changes
+  useEffect(() => {
+    if (cars.length > 0) {
+      applySearchAndFilters();
+    }
+  }, [cars]);
+
+  // Show error message if there's an error loading cars
+  useEffect(() => {
+    if (error) {
+      toast.error('Ошибка загрузки данных об автомобилях');
+    }
+  }, [error]);
 
   // Функция для применения поиска и фильтров
   const applySearchAndFilters = (searchParams = currentSearchParams, filters = currentFilters) => {
@@ -162,7 +178,7 @@ const Index = () => {
               </div>
             </div>
             
-            <CarGrid cars={filteredCars} isLoading={isLoading} />
+            <CarGrid cars={filteredCars} isLoading={isLoading || carsLoading} />
           </div>
         </div>
       </main>
