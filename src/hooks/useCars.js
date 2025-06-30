@@ -1,9 +1,8 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Car } from '@/types/car';
 
-const fetchCars = async (): Promise<Car[]> => {
+const fetchCars = async () => {
   const { data, error } = await supabase
     .from('cars')
     .select('*')
