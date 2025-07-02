@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 
 const AuthDialog = ({ isOpen, onClose }) => {
-  const { login, register } = useAuth();
+  const { signIn, signUp } = useAuth();
   const { toast } = useToast();
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
@@ -34,7 +34,7 @@ const AuthDialog = ({ isOpen, onClose }) => {
     try {
       let result;
       if (isLogin) {
-        result = await login(formData.email, formData.password);
+        result = await signIn(formData.email, formData.password);
       } else {
         // Validation for registration
         if (parseInt(formData.age) < 18) {
@@ -47,16 +47,16 @@ const AuthDialog = ({ isOpen, onClose }) => {
           return;
         }
         
-        result = await register({
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          age: parseInt(formData.age),
-          email: formData.email,
-          password: formData.password
-        });
+        result = await signUp(
+          formData.email,
+          formData.password,
+          formData.firstName,
+          formData.lastName,
+          formData.age
+        );
       }
 
-      if (result.success) {
+      if (!result.error) {
         onClose();
         setFormData({
           firstName: '',

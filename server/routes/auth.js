@@ -9,7 +9,7 @@ const router = express.Router();
 // Регистрация
 router.post('/register', async (req, res) => {
   try {
-    const { email, password, full_name } = req.body;
+    const { email, password, surname, name, age } = req.body;
     
     // Проверяем, существует ли пользователь
     const existingUser = await User.findByEmail(email);
@@ -18,17 +18,22 @@ router.post('/register', async (req, res) => {
     }
     
     // Создаем нового пользователя
-    const user = await User.create({ email, password, full_name });
+    const user = await User.create({ email, password, surname, name, age });
     
     // Создаем JWT токен
     const token = jwt.sign(
-      { userId: user.id, email: user.email, role: user.role },
+      { userId: user.id_user, email: user.email, role: user.role },
       process.env.JWT_SECRET || 'your-secret-key',
       { expiresIn: '24h' }
     );
     
     res.status(201).json({
-      user: { id: user.id, email: user.email, full_name: user.full_name, role: user.role },
+      user: { 
+        id: user.id_user, 
+        email: user.email, 
+        full_name: `${user.name} ${user.surname}`, 
+        role: user.role 
+      },
       token
     });
   } catch (error) {
@@ -49,20 +54,25 @@ router.post('/login', async (req, res) => {
     }
     
     // Проверяем пароль
-    const isValidPassword = await User.validatePassword(password, user.password);
+    const isValidPassword = await User.validatePassword(password, user.password_hash);
     if (!isValidPassword) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
     
     // Создаем JWT токен
     const token = jwt.sign(
-      { userId: user.id, email: user.email, role: user.role },
+      { userId: user.id_user, email: user.email, role: user.role },
       process.env.JWT_SECRET || 'your-secret-key',
       { expiresIn: '24h' }
     );
     
     res.json({
-      user: { id: user.id, email: user.email, full_name: user.full_name, role: user.role },
+      user: { 
+        id: user.id_user, 
+        email: user.email, 
+        full_name: `${user.name} ${user.surname}`, 
+        role: user.role 
+      },
       token
     });
   } catch (error) {
@@ -80,9 +90,9 @@ router.get('/me', authenticateToken, async (req, res) => {
     }
     
     res.json({
-      id: user.id,
+      id: user.id_user,
       email: user.email,
-      full_name: user.full_name,
+      full_name: `${user.name} ${user.surname}`,
       role: user.role
     });
   } catch (error) {

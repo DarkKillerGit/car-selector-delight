@@ -26,12 +26,14 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-  const signUp = async (email, password, fullName) => {
+  const signUp = async (email, password, firstName, lastName, age) => {
     try {
       const response = await apiService.register({
         email,
         password,
-        full_name: fullName
+        name: firstName,
+        surname: lastName,
+        age: parseInt(age)
       });
       setUser(response.user);
       return { error: null };

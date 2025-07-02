@@ -4,31 +4,41 @@ const bcrypt = require('bcryptjs');
 
 class User {
   static async findByEmail(email) {
-    const query = 'SELECT * FROM users WHERE email = $1';
-    const result = await pool.query(query, [email]);
-    return result.rows[0];
+    try {
+      const [rows] = await pool.execute('SELECT * FROM users WHERE email = ?', [email]);
+      return rows[0];
+    } catch (error) {
+      console.error('Error finding user by email:', error);
+      throw error;
+    }
   }
 
   static async findById(id) {
-    const query = 'SELECT * FROM users WHERE id = $1';
-    const result = await pool.query(query, [id]);
-    return result.rows[0];
+    try {
+      const [rows] = await pool.execute('SELECT * FROM users WHERE id_user = ?', [id]);
+      return rows[0];
+    } catch (error) {
+      console.error('Error finding user by ID:', error);
+      throw error;
+    }
   }
 
   static async create(userData) {
-    const { email, password, full_name, role = 'user' } = userData;
+    const { email, password, surname, name, role = 'user', age } = userData;
     
-    // Хешируем пароль
-    const hashedPassword = await bcrypt.hash(password, 10);
-    
-    const query = `
-      INSERT INTO users (email, password, full_name, role)
-      VALUES ($1, $2, $3, $4)
-      RETURNING id, email, full_name, role, created_at
-    `;
-    
-    const result = await pool.query(query, [email, hashedPassword, full_name, role]);
-    return result.rows[0];
+    try {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      
+      const [result] = await pool.execute(
+        'INSERT INTO users (email, password_hash, surname, name, role, age) VALUES (?, ?, ?, ?, ?, ?)',
+        [email, hashedPassword, surname, name, role, age]
+      );
+      
+      return await this.findById(result.insertId);
+    } catch (error) {
+      console.error('Error creating user:', error);
+      throw error;
+    }
   }
 
   static async validatePassword(plainPassword, hashedPassword) {
@@ -36,21 +46,34 @@ class User {
   }
 
   static async findAll() {
-    const query = 'SELECT id, email, full_name, role, created_at FROM users ORDER BY created_at DESC';
-    const result = await pool.query(query);
-    return result.rows;
+    try {
+      const [rows] = await pool.execute('SELECT id_user, email, surname, name, role, age FROM users ORDER BY id_user DESC');
+      return rows;
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      throw error;
+    }
   }
 
   static async updateRole(id, role) {
-    const query = 'UPDATE users SET role = $1 WHERE id = $2 RETURNING id, email, full_name, role';
-    const result = await pool.query(query, [role, id]);
-    return result.rows[0];
+    try {
+      await pool.execute('UPDATE users SET role = ? WHERE id_user = ?', [role, id]);
+      return await this.findById(id);
+    } catch (error) {
+      console.error('Error updating user role:', error);
+      throw error;
+    }
   }
 
   static async delete(id) {
-    const query = 'DELETE FROM users WHERE id = $1 RETURNING id, email';
-    const result = await pool.query(query, [id]);
-    return result.rows[0];
+    try {
+      const user = await this.findById(id);
+      await pool.execute('DELETE FROM users WHERE id_user = ?', [id]);
+      return user;
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      throw error;
+    }
   }
 }
 

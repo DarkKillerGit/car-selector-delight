@@ -5,11 +5,11 @@ import { apiService } from '../services/api';
 const fetchCars = async () => {
   const cars = await apiService.getCars();
   
-  // Преобразуем данные в нужный формат
+  // Преобразуем данные в нужный формат для фронтенда
   return cars.map(car => ({
-    id: car.id,
-    brand: car.brand,
-    model: car.model,
+    id: car.id_car.toString(),
+    brand: car.brand || 'Unknown',
+    model: car.model || 'Unknown',
     year: car.year,
     price: car.price,
     mileage: car.mileage,
@@ -18,6 +18,7 @@ const fetchCars = async () => {
     transmission: car.transmission,
     color: car.color,
     imageUrl: car.image_url,
+    image: car.image_url, // для совместимости
     description: car.description,
     origin: car.origin,
     body: {
@@ -26,9 +27,7 @@ const fetchCars = async () => {
     },
     suspension: car.suspension,
     brakes: car.brakes,
-    driveType: car.drive_type,
-    createdAt: car.created_at,
-    updatedAt: car.updated_at
+    driveType: car.drive_type
   }));
 };
 
