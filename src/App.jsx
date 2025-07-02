@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,7 +13,7 @@ import CarDetails from "./pages/CarDetails";
 import Favorites from "./pages/Favorites";
 import Compare from "./pages/Compare";
 import Architecture from "./pages/Architecture";
-import Admin from './pages/Admin';
+import Admin from "./pages/Admin";
 
 const queryClient = new QueryClient();
 
