@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Car, User, Sitemap } from 'lucide-react';
+import { Car, User, Sitemap, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { Link } from 'react-router-dom';
@@ -29,6 +29,12 @@ const Header = () => {
               <Sitemap className="h-4 w-4" />
               Архитектура
             </Link>
+            {user?.role === 'admin' && (
+              <Link to="/admin" className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1">
+                <Settings className="h-4 w-4" />
+                Админ-панель
+              </Link>
+            )}
             <a href="#" className="text-sm font-medium hover:text-primary transition-colors">
               Browse Cars
             </a>

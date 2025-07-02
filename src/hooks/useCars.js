@@ -1,19 +1,12 @@
 
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { apiService } from '../services/api';
 
 const fetchCars = async () => {
-  const { data, error } = await supabase
-    .from('cars')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  // Transform database data to match our Car interface
-  return data.map(car => ({
+  const cars = await apiService.getCars();
+  
+  // Преобразуем данные в нужный формат
+  return cars.map(car => ({
     id: car.id,
     brand: car.brand,
     model: car.model,

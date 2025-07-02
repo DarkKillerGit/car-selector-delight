@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,34 +13,35 @@ import CarDetails from "./pages/CarDetails";
 import Favorites from "./pages/Favorites";
 import Compare from "./pages/Compare";
 import Architecture from "./pages/Architecture";
+import Admin from './pages/Admin';
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <AuthProvider>
-            <FavoritesProvider>
-              <CompareProvider>
+function App() {
+  return (
+    <QueryClient>
+      <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+        <AuthProvider>
+          <FavoritesProvider>
+            <CompareProvider>
+              <BrowserRouter>
                 <Routes>
                   <Route path="/" element={<Index />} />
-                  <Route path="/car/:id" element={<CarDetails />} />
                   <Route path="/favorites" element={<Favorites />} />
                   <Route path="/compare" element={<Compare />} />
+                  <Route path="/car/:id" element={<CarDetails />} />
                   <Route path="/architecture" element={<Architecture />} />
+                  <Route path="/admin" element={<Admin />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
-              </CompareProvider>
-            </FavoritesProvider>
-          </AuthProvider>
-        </BrowserRouter>
-      </TooltipProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
-);
+              </BrowserRouter>
+              <Toaster />
+            </CompareProvider>
+          </FavoritesProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </QueryClient>
+  );
+}
 
 export default App;
