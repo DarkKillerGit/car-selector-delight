@@ -3,6 +3,8 @@ import React from 'react';
 import CarCard from './CarCard';
 
 const CarGrid = ({ cars, isLoading = false }) => {
+  console.log('CarGrid received cars:', cars);
+
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -13,11 +15,13 @@ const CarGrid = ({ cars, isLoading = false }) => {
     );
   }
 
-  if (cars.length === 0) {
+  if (!cars || cars.length === 0) {
     return (
       <div className="text-center py-12">
-        <h3 className="text-xl font-medium text-gray-700 dark:text-gray-300 mb-2">No cars found</h3>
-        <p className="text-gray-500 dark:text-gray-400">Try adjusting your filters to find more vehicles.</p>
+        <h3 className="text-xl font-medium text-gray-700 dark:text-gray-300 mb-2">Автомобили не найдены</h3>
+        <p className="text-gray-500 dark:text-gray-400">
+          Попробуйте изменить параметры поиска или убедитесь, что сервер подключен к базе данных.
+        </p>
       </div>
     );
   }

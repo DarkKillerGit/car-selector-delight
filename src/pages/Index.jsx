@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { useCars } from '../hooks/useCars';
 import Header from '../components/Header';
@@ -9,6 +8,8 @@ import CompareButton from '../components/CompareButton';
 
 const Index = () => {
   const { data: cars = [], isLoading, error } = useCars();
+  console.log('Cars data in Index component:', cars);
+  
   const [searchFilters, setSearchFilters] = useState({
     searchTerm: '',
     selectedBrand: ''
@@ -68,7 +69,12 @@ const Index = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-destructive mb-4">Ошибка загрузки данных</h2>
-            <p className="text-muted-foreground">Не удалось загрузить список автомобилей. Попробуйте обновить страницу.</p>
+            <p className="text-muted-foreground">
+              Не удалось подключиться к базе данных. Убедитесь, что сервер запущен на порту 3001.
+            </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              Ошибка: {error.message}
+            </p>
           </div>
         </div>
       </div>
