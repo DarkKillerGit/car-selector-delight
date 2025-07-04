@@ -5,7 +5,7 @@ import { apiService } from '../services/api';
 const fetchCars = async () => {
   const cars = await apiService.getCars();
   
-  // Преобразуем данные в нужный формат для фронтенда
+  // Преобразуем данные из MySQL в нужный формат для фронтенда
   return cars.map(car => ({
     id: car.id_car.toString(),
     brand: car.brand || 'Unknown',

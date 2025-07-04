@@ -24,7 +24,7 @@ class Car {
 
   static async create(carData) {
     const {
-      year, price, mileage, mileage_status, fuel_type, transmission,
+      brand, model, year, price, mileage, mileage_status, fuel_type, transmission,
       color, image_url, description, origin, body_type, body_material,
       suspension, brakes, drive_type
     } = carData;
@@ -32,12 +32,12 @@ class Car {
     try {
       const [result] = await pool.execute(
         `INSERT INTO cars (
-          year, price, mileage, mileage_status, fuel_type, transmission,
+          brand, model, year, price, mileage, mileage_status, fuel_type, transmission,
           color, image_url, description, origin, body_type, body_material,
           suspension, brakes, drive_type
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
-          year, price, mileage, mileage_status, fuel_type, transmission,
+          brand, model, year, price, mileage, mileage_status, fuel_type, transmission,
           color, image_url, description, origin, body_type, body_material,
           suspension, brakes, drive_type
         ]
@@ -52,7 +52,7 @@ class Car {
 
   static async update(id, carData) {
     const {
-      year, price, mileage, mileage_status, fuel_type, transmission,
+      brand, model, year, price, mileage, mileage_status, fuel_type, transmission,
       color, image_url, description, origin, body_type, body_material,
       suspension, brakes, drive_type
     } = carData;
@@ -60,13 +60,13 @@ class Car {
     try {
       await pool.execute(
         `UPDATE cars SET 
-          year = ?, price = ?, mileage = ?, mileage_status = ?, fuel_type = ?,
+          brand = ?, model = ?, year = ?, price = ?, mileage = ?, mileage_status = ?, fuel_type = ?,
           transmission = ?, color = ?, image_url = ?, description = ?,
           origin = ?, body_type = ?, body_material = ?, suspension = ?,
           brakes = ?, drive_type = ?
         WHERE id_car = ?`,
         [
-          year, price, mileage, mileage_status, fuel_type, transmission,
+          brand, model, year, price, mileage, mileage_status, fuel_type, transmission,
           color, image_url, description, origin, body_type, body_material,
           suspension, brakes, drive_type, id
         ]
