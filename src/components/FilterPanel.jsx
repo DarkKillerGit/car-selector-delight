@@ -21,8 +21,9 @@ import {
   CollapsibleContent 
 } from '@/components/ui/collapsible';
 
-const FilterPanel = ({ onFilterChange }) => {
+const FilterPanel = ({ cars, filters, onFiltersChange }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [areAllFiltersCollapsed, setAreAllFiltersCollapsed] = useState(false);
   const [areAllFiltersCollapsed, setAreAllFiltersCollapsed] = useState(false);
   const [filters, setFilters] = useState({
     carOrigins: [],

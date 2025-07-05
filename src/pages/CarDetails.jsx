@@ -71,7 +71,7 @@ const CarDetails = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div>
             <img 
-              src={car.imageUrl} 
+              src={car.imageUrl || car.image} 
               alt={`${car.brand} ${car.model}`}
               className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
             />
@@ -115,7 +115,7 @@ const CarDetails = () => {
                 <div className="flex items-center gap-2">
                   <Box className="h-5 w-5 text-primary" />
                   <span className="font-medium">Кузов:</span>
-                  <span>{car.body.type}</span>
+                  <span>{car.body?.type}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Zap className="h-5 w-5 text-primary" />
@@ -153,7 +153,7 @@ const CarDetails = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium">Материал кузова:</span>
-                  <span>{car.body.material}</span>
+                  <span>{car.body?.material}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium">Подвеска:</span>

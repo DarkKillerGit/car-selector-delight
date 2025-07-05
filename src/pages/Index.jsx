@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { useCars } from '../hooks/useCars';
 import Header from '../components/Header';
@@ -47,7 +48,7 @@ const Index = () => {
       // Advanced filters
       const matchesPrice = car.price >= filters.priceRange[0] && car.price <= filters.priceRange[1];
       const matchesBrandFilter = filters.selectedBrands.length === 0 || filters.selectedBrands.includes(car.brand);
-      const matchesBodyType = filters.selectedBodyTypes.length === 0 || filters.selectedBodyTypes.includes(car.body.type);
+      const matchesBodyType = filters.selectedBodyTypes.length === 0 || filters.selectedBodyTypes.includes(car.body?.type);
       const matchesFuelType = filters.selectedFuelTypes.length === 0 || filters.selectedFuelTypes.includes(car.fuelType);
       const matchesTransmission = filters.selectedTransmissions.length === 0 || filters.selectedTransmissions.includes(car.transmission);
       const matchesColor = filters.selectedColors.length === 0 || filters.selectedColors.includes(car.color);
